@@ -138,5 +138,22 @@ namespace Ninject.Tests.Binding
 			IKernel kernel = new StandardKernel(module);
 		}
 		/*----------------------------------------------------------------------------------------*/
+        [Test]
+        public void CanBindInlineModuleTwoSeperateTimes()
+        {
+            var moduleA = new InlineModule(m => m.Bind<IMock>().To<ImplA>());
+            var moduleB = new InlineModule(m => m.Bind<string>().ToConstant("test"));
+
+            using (var kernel = new StandardKernel(moduleA, moduleB))
+            {
+				var mock1 = kernel.Get<IMock>();
+				var mock2 = kernel.Get<string>();
+                
+				Assert.That(mock1, Is.Not.Null);
+                Assert.That(mock2, Is.EqualTo("test"));
+            }
+
+        }
+		/*----------------------------------------------------------------------------------------*/
 	}
 }

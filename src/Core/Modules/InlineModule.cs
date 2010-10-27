@@ -56,5 +56,16 @@ namespace Ninject.Core
 		}
 		#endregion
 		/*----------------------------------------------------------------------------------------*/
+        /// <summary>
+        /// Gets the name of the module.  Unique per instance.
+        /// </summary>
+        public override string Name
+        {
+            get
+            {
+                return this.GetType().Name + this._loadCallbacks.GetHashCode();
+            }
+        }
+		/*----------------------------------------------------------------------------------------*/
 	}
 }
